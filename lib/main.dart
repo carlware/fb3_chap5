@@ -44,9 +44,54 @@ class _MyHomePageState extends State<MyHomePage> {
         crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
-            DestinationWidget(destinationName: 'Staithes'),
-            DestinationWidget(destinationName: 'Saltburn'),
-            DestinationWidget(destinationName: 'Whitby'),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: DestinationWidget(destinationName: 'Staithes'),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: DestinationWidget(destinationName: 'Staithes'),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: DestinationWidget(destinationName: 'Staithes'),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: DestinationWidget(destinationName: 'Staithes'),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: DestinationWidget(destinationName: 'Staithes'),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: DestinationWidget(destinationName: 'Staithes'),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: DestinationWidget(destinationName: 'Staithes'),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: DestinationWidget(destinationName: 'Staithes'),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: DestinationWidget(destinationName: 'Staithes'),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: DestinationWidget(destinationName: 'Staithes'),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: DestinationWidget(destinationName: 'Staithes'),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: DestinationWidget(destinationName: 'Staithes'),
+            ),
           ],
         ),
       ),
