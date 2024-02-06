@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'destination_widget.dart';
+import 'like_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -42,11 +42,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: const Center(
         child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            DestinationWidget(destinationName: 'Staithes'),
-            DestinationWidget(destinationName: 'Saltburn'),
-            DestinationWidget(destinationName: 'Whitby'),
+            DestinationLike(),
           ],
         ),
       ),
