@@ -42,11 +42,11 @@ class _MyHomePageState extends State<MyHomePage> {
       body: const Center(
         child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            DestinationWidget(destinationName: 'Staithes'),
-            DestinationWidget(destinationName: 'Saltburn'),
-            DestinationWidget(destinationName: 'Whitby'),
+            DestinationWidget(destinationName: 'Counter 1'),
+            DestinationWidget(destinationName: 'Counter 2'),
+            DestinationWidget(destinationName: 'Counter 3'),
           ],
         ),
       ),
