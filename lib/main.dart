@@ -4,33 +4,55 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+  @override
+  State<StatefulWidget> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  String? _selectedDestination;
+
+  void _setDestination(String destination) {
+    this.setState(() {
+      _selectedDestination = destination;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.indigo,
+      title: "Fluuter App",
+      home: Navigator(
+        pages: [
+          MaterialPage(
+              child: MyHomePage(
+                title: "Press this",
+                destinationCallback: _setDestination,
+              )),
+          if (_selectedDestination != null)
+            MaterialPage(
+              child: DestinationDetails(title: _selectedDestination!),
+            )
+        ],
+        onPopPage: (route, result) {
+          if (!route.didPop(result)) {
+            return false;
+          }
+          setState(() {
+            _selectedDestination = null;
+          });
+          return true;
+        },
       ),
-      onGenerateRoute: (settings) {
-        if (settings.name == '/') {
-          return MaterialPageRoute(
-              builder: (context) => MyHomePage(title: "Flutter Demo Home Page"),
-          );
-        } else if (settings.name == '/destination') {
-          return MaterialPageRoute(
-              builder: (context) => DestinationDetails(title: settings.arguments as String),
-          );
-        }
-      },
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  MyHomePage({required this.title, required this.destinationCallback});
+  final void Function(String) destinationCallback;
+
   final String title;
 
   @override
@@ -38,14 +60,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,72 +68,53 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+            ElevatedButton(
+              child: Text('Whitby'),
+              onPressed: () {
+                widget.destinationCallback("Whitby");
+              },
             ),
             ElevatedButton(
-              child: Text('Press this'),
+              child: Text('Scarborough'),
               onPressed: () {
-                Navigator.of(context).push(MySlideTransition(transitionPage: DestinationDetails(title: "Whitby")));
+                widget.destinationCallback("Scarborough");
               },
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
 }
 
 class DestinationDetails extends StatelessWidget {
-  final String title;
-
   DestinationDetails({required this.title});
-
+  final String title;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
       body: Center(
-        child: ElevatedButton(
-          child: Text("Back"),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              child: Text('Favorite'),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+            ElevatedButton(
+              child: Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+          ],
         ),
       ),
     );
   }
-}
-
-class MySlideTransition extends PageRouteBuilder {
-  final Widget transitionPage;
-  MySlideTransition({required this.transitionPage})
-      : super(
-    pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) => transitionPage,
-    transitionsBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        Widget child,
-        ) =>
-        SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(-1, 0),
-            end: Offset.zero,
-          ).animate(animation),
-          child: child,
-        ),
-  );
 }
