@@ -66,15 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ElevatedButton(
               child: Text('Press this'),
-              onPressed: () async {
-                bool? outcome = await Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) {
-                    return DestinationDetails(title: "Whitby");
-                  }),
-                );
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Favorite: $outcome")),
-                );
+              onPressed: () {
+                Navigator.of(context).push(MySlideTransition(transitionPage: DestinationDetails(title: "Whitby")));
               },
             ),
           ],
@@ -99,24 +92,34 @@ class DestinationDetails extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              child: Text('Favorite'),
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
-            ),
-            ElevatedButton(
-              child: Text("Close"),
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
-            ),
-          ],
-        )
+        child: ElevatedButton(
+          child: Text("Back"),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
     );
   }
+}
+
+class MySlideTransition extends PageRouteBuilder {
+  final Widget transitionPage;
+  MySlideTransition({required this.transitionPage})
+      : super(
+    pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) => transitionPage,
+    transitionsBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+        ) =>
+        SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(-1, 0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: child,
+        ),
+  );
 }
