@@ -14,7 +14,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: {
+        '/': (context) => MyHomePage(title: 'Flutter Demo Home Page'),
+        '/destination': (context) => DestinationDetails(title: "Whitby"),
+      },
     );
   }
 }
@@ -57,11 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               child: Text('Press this'),
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) {
-                    return DestinationDetails(title: "Whitby");
-                  }),
-                );
+                Navigator.of(context).pushNamed("/destination");
               },
             ),
           ],
